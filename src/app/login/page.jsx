@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, redirect } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { socket } from '@/socket';
+import LoadingScreen from '../components/commons/loadingScreen';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -82,9 +83,7 @@ const Login = () => {
     if (loading) {
         // Mostrar una carga o un spinner mientras se verifica la autenticación
         return (
-            <div className="flex justify-center items-center h-screen bg-pink-100 ">
-                <div className="spinner">Cargando...</div>
-            </div>
+            <LoadingScreen />
         );
     }
 
