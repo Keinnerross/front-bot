@@ -20,19 +20,49 @@ const Dashboard = () => {
     const [isConnected, setIsConnected] = useState(false);
     const [tooltip, setTooltip] = useState(false);
 
+    let hasInteracted = false; // Flag para asegurar que la primera interacción habilite la reproducción
 
-    //Carga de datos y renderizado
+    const handleUserInteraction = () => {
+        if (!hasInteracted) {
+            // Desbloquear la reproducción de audio 
+            hasInteracted = true;
+        }
+    };
+
+
+
     useEffect(() => {
+
+        document.addEventListener('click', handleUserInteraction);
+
         socket.on('new-order', (newOrders) => {
-            setOrders(newOrders); // Actualizar los pedidos
-            // Mostrar una alerta con SweetAlert2
-            Swal.fire({
-                title: 'Nuevo Pedido!',
-                text: '¡Tienes un nuevo pedido en tu sistema!',
-                icon: 'info',
-                confirmButtonText: 'Aceptar'
-            });
+
+            setOrders(newOrders);
+
+
+            const hasInProcessOrder = newOrders.some(order => order.estado === 'En proceso');
+
+
+
+            if (hasInProcessOrder) {
+                if (hasInteracted) {
+                    const audio = new Audio('/audio/notificacion.mp3');
+                    audio.play().catch((error) => {
+                        console.log('Error al reproducir el audio:', error);
+                    });
+                }
+
+                Swal.fire({
+                    title: 'Nuevo Pedido!',
+                    text: '¡Tienes un nuevo pedido en tu sistema!',
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar'
+                });
+
+
+            }
         });
+
 
         socket.on('get-orders', (orders) => {
             setOrders(orders);
@@ -138,7 +168,7 @@ const Dashboard = () => {
                         <li className="p-6 border-t border-b border-light-gray grid grid-cols-8 gap-10 text-sm uppercase font-semibold text-gray-400 ">
                             <section className="flex justify-center">Orden</section>
                             <section className="flex justify-center">Fecha</section>
-                            <section className="flex justify-center">Producto</section>
+                            <section className="flex justify-start">Producto</section>
                             <section className="flex justify-center">Salsas/Toppings</section>
                             <section className="flex justify-center">Extras</section>
                             <section className="flex justify-center">Metodo Pago</section>
