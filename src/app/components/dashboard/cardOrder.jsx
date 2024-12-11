@@ -5,19 +5,19 @@ import Swal from 'sweetalert2';
 import { socket } from '@/socket';
 import DetailsCardOrder from "./detailsCardOrder";
 
-
 const CardOrder = ({ order }) => {
-    const [estado, setEstado] = useState(order.estado);
+    const [orderEstado, setOrderEstado] = useState(order.estado);
     const [formattedDate, setFormattedDate] = useState({ date: "", time: "" });
 
+    // Sincronizar el estado con el prop order.estado cada vez que el pedido cambie
+    useEffect(() => {
+        setOrderEstado(order.estado);
+    }, [order]); // Ahora depende de order
 
     const updateOrderStatus = (newState) => {
-
+        setOrderEstado(newState);
         socket.emit('update-order', { orderNumber: order.numeroDeOrden, newState: newState });
-        setEstado(newState)
-
-    }
-
+    };
 
     const handleChange = async (e) => {
         const nuevoEstado = e.target.value;
@@ -41,12 +41,6 @@ const CardOrder = ({ order }) => {
         }
     };
 
-
-
-
-
-
-
     useEffect(() => {
         if (order.fecha) {
             const [time, month, day, year] = order.fecha.split(" "); // Suponiendo que order.fecha es "21:34 12 09 24"
@@ -58,11 +52,6 @@ const CardOrder = ({ order }) => {
         }
     }, [order.fecha]);
 
-
-
-
-
-
     return (
         <li className="text-text">
             <details className="border-t border-b border-light-gray hover:bg-slate-100 cursor-pointer">
@@ -71,7 +60,6 @@ const CardOrder = ({ order }) => {
                     <section id="date" className="flex flex-col items-center">
                         <p>{formattedDate.time}</p>
                         <p>{formattedDate.date}</p>
-
                     </section>
                     <div id="product" className="flex justify-start items-center">
                         <p className="line-clamp-2 max-w-xs max-h-[40px] overflow-hidden text-ellipsis">
@@ -82,19 +70,17 @@ const CardOrder = ({ order }) => {
                         <p className="line-clamp-2 max-w-xs max-h-[40px] overflow-hidden text-ellipsis">
                             {order.salsas && `Salsas: ${order.salsas}`}
                         </p>
-
                     </section>
                     <section id="Extras" className="flex justify-center text-center items-center">{order.extras || "Sin extras"}</section>
                     <section id="Metodo de pago" className="flex justify-center items-center">
                         {order.metodoPago && order.metodoPago.includes('Nequi') ? "Nequi" : order.metodoPago}
                     </section>
                     <section id="status" className="flex justify-center items-center">
-                        {estado === "En proceso" ? (
+                        {orderEstado === "En proceso" ? (
                             <select
-                                className="bg-[#fff5d6] text-[#fdc824] font-semibold cursor-pointer px-2 py-1 rounded-xl uppercase "
-                                value={estado}
+                                className="bg-[#fff5d6] text-[#fdc824] font-semibold cursor-pointer px-2 py-1 rounded-xl uppercase"
+                                value={orderEstado} // Ahora es sincronizado con orderEstado
                                 onChange={handleChange}
-
                             >
                                 <option value="En proceso" className="text-text capitalize">En Proceso</option>
                                 <option value="Enviado" className="text-text capitalize">Enviado</option>

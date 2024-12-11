@@ -1,7 +1,7 @@
 const DetailsCardOrder = ({ order }) => {
 
     const renderDetail = (label, value, fallback) => (
-        <div className="flex gap-4">
+        <div className="flex gap-2">
             <h2 className="font-semibold">{label}:</h2>
             <p className="text-gray-700">{value || fallback}</p>
         </div>
@@ -28,11 +28,24 @@ const DetailsCardOrder = ({ order }) => {
                     </div>
                     {renderDetail('Método de pago', order.metodoPago, 'No especificado')}
                     {renderDetail('Total', order.cuenta, 'No especificado')}
-                    {renderDetail('Comprobante/Cambio', order.comprobante, 'Sin comprobante')}
+
+
+                    {order.comprobante.includes("media") ?
+                        <div className="flex gap-1">
+                            <p>Ver comprobante en</p>
+                            <a className="font-bold text-green-600 hover:text-green-500  transition-colors cursor-pointer" target="_blank" href={`https://wa.me/${order.whatsapp}`}>whatsapp</a>
+                        </div>
+
+
+                        : <div className="flex gap-3 items-center">
+                            <p>Cambio: {order.comprobante}</p>
+                            <a className="font-semibold bg-green-600 cursor-pointer rounded-2xl text-white py-1 px-2" target="_blank" href={`https://wa.me/${order.whatsapp}`}>abrir whatsapp</a>
+                        </div>}
+
 
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

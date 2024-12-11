@@ -44,7 +44,9 @@ const useDashboardLogic = () => {
       text: 'Este es un ejemplo de alerta usando SweetAlert2.',
       icon: 'info',
       html: `
-        <img id="qr-img" src="/qr.png" />
+        <div class="flex justify-center">
+          <img id="qr-img" src="/qr.png" />
+        </div>
       `,
       confirmButtonText: 'Entendido'
     });

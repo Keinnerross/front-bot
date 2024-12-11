@@ -8,7 +8,8 @@ const LoadingScreen = () => {
                 width={150}
                 height={150}
                 src="/logo-fresata.jpg"
-                alt="logo fresata - las mejores fresas con crema Colombia" />
+                alt="logo fresata - las mejores fresas con crema Colombia"
+                priority />
             <div className="spinner">Cargando...</div>
         </div>
     )

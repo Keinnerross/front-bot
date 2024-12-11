@@ -12,6 +12,7 @@ import { logOut } from "./hooks/logoutSession";
 
 import { BiLogOut } from "react-icons/bi";
 import CardOrder from "../components/dashboard/cardOrder";
+import Image from "next/image";
 
 
 const Dashboard = () => {
@@ -20,11 +21,10 @@ const Dashboard = () => {
     const [isConnected, setIsConnected] = useState(false);
     const [tooltip, setTooltip] = useState(false);
 
-    let hasInteracted = false; // Flag para asegurar que la primera interacción habilite la reproducción
+    let hasInteracted = false;
 
     const handleUserInteraction = () => {
         if (!hasInteracted) {
-            // Desbloquear la reproducción de audio 
             hasInteracted = true;
         }
     };
@@ -32,24 +32,17 @@ const Dashboard = () => {
 
 
     useEffect(() => {
-
         document.addEventListener('click', handleUserInteraction);
 
         socket.on('new-order', (newOrders) => {
 
-            setOrders(newOrders);
-
-
             const hasInProcessOrder = newOrders.some(order => order.estado === 'En proceso');
-
-
 
             if (hasInProcessOrder) {
                 if (hasInteracted) {
                     const audio = new Audio('/audio/notificacion.mp3');
-                    audio.play().catch((error) => {
-                        console.log('Error al reproducir el audio:', error);
-                    });
+                    audio.play();
+
                 }
 
                 Swal.fire({
@@ -61,6 +54,8 @@ const Dashboard = () => {
 
 
             }
+
+            setOrders(newOrders);
         });
 
 
@@ -71,7 +66,7 @@ const Dashboard = () => {
 
         socket.on('conectado-front', () => {
             setIsConnected(true)
-            console.log("Es true")
+            console.log("Sock connect")
         });
         socket.on('desconectado-front', () => {
             setIsConnected(false)
@@ -109,10 +104,17 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="dashboard  min-h-screen bg-background-color flex justify-center">
+        <div className="dashboard min-h-screen bg-background-color flex justify-center pb-20">
             <div className="w-[90vw] flex flex-col gap-5 pt-16">
                 <div className="p-6 rounded-xl flex justify-between items-center ">
-                    <div className="flex flex-col justify-center">
+                    <div className="flex items-center">
+                        <Image
+                            className="rounded-full"
+                            width={50}
+                            height={50}
+                            src="/logo-fresata.jpg"
+                            alt="logo fresata - las mejores fresas con crema Colombia"
+                            priority />
                         <h2 className="text-4xl font-semibold"> ¡Bienvenido!🍓</h2>
                         <div className="conectado-container font-light">
                             {isConnected ?
