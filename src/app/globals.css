@@ -21,5 +21,26 @@ body {
 }
 
 details[open] summary {
-  background-color: #F1F5F9;
+  background-color: #f1f5f9;
+}
+
+input:-webkit-autofill {
+  background-color: transparent !important; /* Elimina el color */
+  color: inherit !important; /* Hereda el color del texto */
+  box-shadow: 0 0 0px 1000px #ecf0f1 inset !important; /* Sobrescribe el fondo */
+  -webkit-text-fill-color: inherit !important; /* Color del texto */
+}
+
+input:focus,
+textarea:focus {
+  outline: none; /* Elimina el borde por defecto */
+  border: none; /* También elimina cualquier borde si lo tiene */
+}
+
+
+
+.swal2-confirm {
+  background-color: #bd0d1c; /* Color personalizado (verde) */
+  border-color: #bd0d1c; /* Borde del botón */
+  color: white; /* Color del texto */
 }

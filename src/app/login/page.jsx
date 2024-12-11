@@ -1,9 +1,11 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter, redirect } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { socket } from '@/socket';
 import LoadingScreen from '../components/commons/loadingScreen';
+import { FaKey, FaUserAlt } from "react-icons/fa";
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -41,8 +43,7 @@ const Login = () => {
         const handleLoginSuccess = (data) => {
             Swal.fire({
                 icon: 'success',
-                title: 'Login Successful',
-                text: data.message,
+                title: 'Login Exitoso',
                 confirmButtonText: 'OK',
             }).then(() => {
                 // Al iniciar sesión correctamente, guardamos el token
@@ -88,58 +89,68 @@ const Login = () => {
     }
 
     return (
-        <div className="w-full h-screen bg-pink-100 flex">
-            <div className="w-1/2 h-full bg-no-repeat bg-[url('/bg-login.png')] bg-[position:0_150px] bg-[size:80%] relative">
-                <div className="absolute top-10 left-24 text-white font-semibold text-xl">FRESATA ® | Fresas con crema</div>
+        <Fragment>
+            <div className="w-full h-screen bg-[#fbc2c8]  items-center justify-center fixed z-50 flex md:hidden">
+                <p className="font-semibold text-center px-4">     Aplicacion solo disponible en Escritorio  </p>
             </div>
+            <div className="w-full h-screen bg-[#fbc2c8] hidden md:flex">
+                <div className="w-1/2 h-full bg-no-repeat bg-[url('/bg-login.png')] bg-[position:0_150px] bg-[size:80%] relative">
+                    <div className="absolute top-10 left-24 text-text font-semibold text-xl">FRESATA ® | Fresas con crema</div>
+                </div>
 
-            <div className="w-1/2 h-full flex justify-center items-center">
-                <div className="w-1/2 min-w-1/2 max-w-1/2 h-[60vh] p-8 bg-white rounded-xl">
-                    <h1 className="py-2 text-2xl font-semibold">Inicia Sesión</h1>
-                    <p className="pb-2 text-gray-500 text-sm font-light leading-6">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime dicta modi voluptates mollitia sapiente?
-                    </p>
-                    <form id="loginForm" className="text-left" onSubmit={handleSubmit}>
-                        <div className="flex flex-col gap-1 py-2">
-                            <div className="bg-white h-12 px-4 rounded-full flex items-center">
-                                <i className="text-gray-400 pr-2 fas fa-user"></i>
-                                <input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    placeholder="Usuario"
-                                    className="w-full h-full bg-transparent"
-                                    required
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
+                <div className="w-1/2 h-full flex justify-center items-center">
+                    <div className="w-1/2 min-w-[400px] max-w-[400px] min-h-[65vh] p-8 bg-white rounded-3xl shadow-lg">
+                        <h1 className="py-2 text-2xl font-semibold">Inicia Sesión</h1>
+                        <p className="max-w-[99%] pb-2 text-gray-500 text-sm font-light leading-6">
+                            Por favor ingresa tus credenciales para acceder a tu cuenta.
+                        </p>
+                        <form id="loginForm" className="text-left" onSubmit={handleSubmit}>
+                            <div className="flex flex-col gap-1 py-2">
+                                <div className="!bg-[#ECF0F1] h-12 px-4 rounded-full flex items-center gap-4 ">
+
+                                    <FaUserAlt fill="lightgray" />
+
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        placeholder="Usuario"
+                                        className="w-full h-full bg-transparent"
+                                        required
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex flex-col gap-1 py-2">
-                            <div className="bg-white h-12 px-4 rounded-full flex items-center">
-                                <i className="text-gray-400 pr-2 fa fa-key"></i>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Contraseña"
-                                    className="w-full h-full bg-transparent"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
+                            <div className="flex flex-col gap-1 py-2">
+                                <div className="!bg-[#ECF0F1] h-12 px-4 rounded-full flex items-center gap-4">
+                                    <FaKey fill="lightgray" />
+
+
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Contraseña"
+                                        className="w-full h-full bg-transparent"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <button
-                            className="w-full bg-red-700 text-white border-2 border-red-700 py-3 px-5 text-lg font-semibold rounded-full mt-4 transition-colors duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                            type="submit"
-                        >
-                            Iniciar sesión
-                        </button>
-                    </form>
+                            <button
+                                className="w-full bg-red-700 text-white border-2 border-red-700 py-3 px-5 text-lg font-semibold rounded-full mt-4 transition-colors duration-300 ease-in-out hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                type="submit"
+                            >
+                                Iniciar sesión
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Fragment>
     );
 }
 

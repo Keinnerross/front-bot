@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const LoadingScreen = () => {
     return (
-        <div className="flex flex-col justify-center items-center  gap-4 h-screen bg-pink-100">
+        <div className="flex flex-col justify-center items-center  gap-4 h-screen bg-[#fbc2c8]">
             <Image
                 className="rounded-full"
                 width={150}
