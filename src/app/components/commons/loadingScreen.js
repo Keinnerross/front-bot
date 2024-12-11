@@ -1,18 +1,11 @@
-import Image from "next/image";
+import { FaSpinner } from "react-icons/fa";
 
 const LoadingScreen = () => {
     return (
-        <div className="flex flex-col justify-center items-center  gap-4 h-screen bg-[#fbc2c8]">
-            <Image
-                className="rounded-full"
-                width={150}
-                height={150}
-                src="/logo-fresata.jpg"
-                alt="logo fresata - las mejores fresas con crema Colombia"
-                priority />
-            <div className="spinner">Cargando...</div>
+        <div className="flex flex-col justify-center items-center gap-4 h-screen bg-[#fbc2c8]">
+            <FaSpinner className="animate-spin text-4xl"  size={40}/>
         </div>
-    )
+    );
 }
 
 export default LoadingScreen;

@@ -22,7 +22,7 @@ const DetailsCardOrder = ({ order }) => {
                 {/* Detalles del Pago */}
                 <div id="productPayDetails" className="w-1/2 flex flex-col gap-2">
                     <div className="flex gap-4 w-full">
-                        <h2 className="font-semibold">Dirección de entrega:</h2>
+                        <h2 className="font-semibold">Datos de entrega:</h2>
                         {/* Deja que el texto fluya hacia abajo y asegúrate de que pueda romper la línea */}
                         <p className="text-gray-700 break-words max-w-[80%]">{order.datosEntrega || 'Sin dirección proporcionada'}</p>
                     </div>

@@ -95,7 +95,22 @@ const Login = () => {
             </div>
             <div className="w-full h-screen bg-[#fbc2c8] hidden md:flex">
                 <div className="w-1/2 h-full bg-no-repeat bg-[url('/bg-login.png')] bg-[position:0_150px] bg-[size:80%] relative">
-                    <div className="absolute top-10 left-24 text-text font-semibold text-xl">FRESATA ® | Fresas con crema</div>
+
+                    <div className="absolute top-10 left-24 text-text font-semibold text-xl flex gap-2 items-center">
+                        <div className="w-16 h-16 rounded-full overflow-hidden">
+                            <img
+                                src="/logo-fresata.jpg"
+                                alt="Logo"
+                                style={{
+                                    width: "180%",  
+                                    height: "180%",
+                                    objectFit: "cover",  
+                                    transform: "translate(0%, -22%)"  
+                                }}
+                            />
+                        </div>
+                        <p>FRESATA ® | Fresas con crema</p>
+                    </div>
                 </div>
 
                 <div className="w-1/2 h-full flex justify-center items-center">
